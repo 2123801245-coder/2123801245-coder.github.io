@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-lang="zh">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>张浩博 Haobo Zhang · 泰语 × 计算机</title>
 <meta name="description" content="北京外国语大学泰语专业本科在读，辅修计算机。独立交付离线优先 PWA 与签名 Android APK、泰国电商市场情报平台、泰中双语字幕流水线。">
-<meta property="og:title" content="张浩博 Haobo Zhang · 泰语 × 计算机">
+<meta property="og:title" content="Haobo Zhang · Thai × Computer Science">
 <meta property="og:description" content="Thai major who ships working systems. 泰语语料 / 语音数据 / 大模型评测 / 本地化测试。">
 <meta property="og:type" content="profile">
 <style>
@@ -24,22 +24,36 @@
   html{-webkit-text-size-adjust:100%}
   body{
     margin:0; background:var(--bg); color:var(--fg);
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans Thai",sans-serif;
     line-height:1.7; font-size:16px; -webkit-font-smoothing:antialiased;
   }
   .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px}
   a{color:var(--accent); text-decoration:none}
   a:hover{text-decoration:underline}
   h1,h2,h3{line-height:1.3; margin:0}
-  .en{color:var(--fg-soft); font-size:.86em; font-weight:400}
+
+  /* ---------- 语言切换 ---------- */
+  html[data-lang="zh"] .L-en{display:none !important}
+  html[data-lang="en"] .L-zh{display:none !important}
+
+  .langbar{display:flex; justify-content:flex-end; padding:20px 0 0}
+  .langswitch{
+    display:inline-flex; border:1px solid var(--line); border-radius:999px;
+    overflow:hidden; background:var(--bg-soft); font-size:13px;
+  }
+  .langswitch button{
+    appearance:none; border:0; background:transparent; color:var(--fg-soft);
+    padding:6px 14px; font:inherit; font-size:13px; cursor:pointer; transition:.15s;
+  }
+  .langswitch button[aria-pressed="true"]{background:var(--accent); color:#fff; font-weight:600}
+  .langswitch button:not([aria-pressed="true"]):hover{color:var(--fg)}
 
   /* ---------- hero ---------- */
-  header{padding:72px 0 40px; border-bottom:1px solid var(--line)}
+  header{padding:24px 0 40px; border-bottom:1px solid var(--line)}
   .name{font-size:clamp(28px,5vw,42px); font-weight:700; letter-spacing:-.02em}
   .name .en-name{display:block; font-size:.46em; font-weight:400; color:var(--fg-soft); letter-spacing:0; margin-top:6px}
   .affil{margin-top:16px; font-size:15px; color:var(--fg-soft)}
   .pitch{margin-top:22px; font-size:clamp(17px,2.4vw,20px); font-weight:600; max-width:34em}
-  .pitch .en{display:block; font-weight:400; margin-top:4px}
   .contact{margin-top:26px; display:flex; flex-wrap:wrap; gap:10px}
   .btn{
     display:inline-block; padding:8px 15px; border-radius:999px;
@@ -64,7 +78,6 @@
   section{padding:56px 0; border-bottom:1px solid var(--line)}
   section:last-of-type{border-bottom:0}
   .sec-title{font-size:13px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--fg-soft); margin-bottom:26px}
-  .sec-title .en{letter-spacing:.06em; text-transform:none; margin-left:8px}
 
   /* ---------- project card ---------- */
   .card{
@@ -87,6 +100,7 @@
   .card .links a{font-size:13.5px; padding:6px 13px; border:1px solid var(--line); border-radius:999px; background:var(--bg)}
   .card .links a:hover{border-color:var(--accent); text-decoration:none}
   .card .links a.primary{background:var(--accent); border-color:var(--accent); color:#fff}
+  code{font-size:.9em; background:var(--bg); padding:1px 5px; border-radius:4px; border:1px solid var(--line)}
 
   /* ---------- skills ---------- */
   .skills{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px}
@@ -96,106 +110,175 @@
 
   footer{padding:40px 0 60px; color:var(--fg-soft); font-size:13.5px}
   footer a{color:var(--fg-soft)}
+  .fineprint{font-size:12.5px; margin-top:8px}
 </style>
 </head>
 <body>
 
+<div class="wrap langbar">
+  <div class="langswitch" role="group" aria-label="Language / 语言">
+    <button type="button" data-setlang="zh" aria-pressed="true">中文</button>
+    <button type="button" data-setlang="en" aria-pressed="false">English</button>
+  </div>
+</div>
+
 <header>
   <div class="wrap">
     <h1 class="name">张浩博<span class="en-name">Haobo Zhang</span></h1>
-    <p class="affil">
-      北京外国语大学 · 亚洲学院 · 泰语专业本科在读（2025 级）｜ 辅修计算机方向课程<br>
-      <span class="en">Beijing Foreign Studies University — School of Asian Studies · Thai major, minor coursework in Computer Science</span>
+
+    <p class="affil L-zh">
+      北京外国语大学 · 亚洲学院 · 泰语专业本科在读（2025 级）｜ 辅修计算机方向课程
     </p>
-    <p class="pitch">
-      我把泰语的语言判断，写成可以运行的系统。
-      <span class="en">I turn Thai-language judgement into working systems — not coursework, shipped products.</span>
+    <p class="affil L-en">
+      Beijing Foreign Studies University — School of Asian Studies · Thai major, minor coursework in Computer Science
     </p>
+
+    <p class="pitch L-zh">我把泰语的语言判断，写成可以运行的系统。</p>
+    <p class="pitch L-en">I turn Thai-language judgement into working systems — not coursework, shipped products.</p>
+
     <div class="contact">
       <a class="btn primary" href="mailto:2123801245@qq.com">2123801245@qq.com</a>
       <a class="btn" href="https://github.com/2123801245-coder">GitHub</a>
-      <a class="btn" href="https://github.com/2123801245-coder/thai-kb">thai-kb 源码</a>
-      <a class="btn" href="https://2123801245-coder.github.io/thai-kb/">泰语知识库在线版</a>
+      <a class="btn" href="https://github.com/2123801245-coder/thai-kb">
+        <span class="L-zh">thai-kb 源码</span><span class="L-en">thai-kb source</span>
+      </a>
+      <a class="btn" href="https://2123801245-coder.github.io/thai-kb/">
+        <span class="L-zh">泰语知识库在线版</span><span class="L-en">Live Thai knowledge base</span>
+      </a>
     </div>
 
     <div class="stats">
-      <div class="stat"><b>402</b><span>词表条目<br>vocabulary entries</span></div>
-      <div class="stat"><b>995</b><span>条内嵌朗读语音<br>embedded audio clips</span></div>
-      <div class="stat"><b>53</b><span>次提交 / 17 天<br>commits in 17 days</span></div>
-      <div class="stat"><b>11,488</b><span>行 Python · 零依赖<br>lines, zero dependencies</span></div>
-      <div class="stat"><b>187 → 0</b><span>数字回查 / 越界<br>numbers verified / out-of-bounds</span></div>
+      <div class="stat"><b>402</b><span class="L-zh">词表条目</span><span class="L-en">vocabulary entries</span></div>
+      <div class="stat"><b>995</b><span class="L-zh">条内嵌朗读语音</span><span class="L-en">embedded audio clips</span></div>
+      <div class="stat"><b>53</b><span class="L-zh">次提交 / 17 天</span><span class="L-en">commits in 17 days</span></div>
+      <div class="stat"><b>11,488</b><span class="L-zh">行 Python · 零依赖</span><span class="L-en">lines, zero dependencies</span></div>
+      <div class="stat"><b>187 → 0</b><span class="L-zh">数字回查 / 越界</span><span class="L-en">numbers verified / out-of-bounds</span></div>
     </div>
   </div>
 </header>
 
 <section>
   <div class="wrap">
-    <h2 class="sec-title">项目 <span class="en">Projects</span></h2>
+    <h2 class="sec-title L-zh">项目</h2>
+    <h2 class="sec-title L-en">Projects</h2>
 
+    <!-- 1 -->
     <div class="card">
       <div class="card-top">
-        <h3>泰语个人知识库 · thai-kb</h3>
-        <span class="tag">离线优先 PWA + 签名 APK</span>
+        <h3 class="L-zh">泰语个人知识库 · thai-kb</h3>
+        <h3 class="L-en">Personal Thai Knowledge Base · thai-kb</h3>
+        <span class="tag L-zh">离线优先 PWA + 签名 APK</span>
+        <span class="tag L-en">Offline-first PWA + signed APK</span>
       </div>
-      <p>面向泰语学习者的离线学习系统。浏览器、手机、平板、安卓 App 四种形态，全部数据离线可用。</p>
-      <ul>
+
+      <p class="L-zh">面向泰语学习者的离线学习系统。浏览器、手机、平板、安卓 App 四种形态，全部数据离线可用。</p>
+      <p class="L-en">An offline learning system for Thai learners — usable as a web page, on phone or tablet, or as a native Android app, with all data available offline.</p>
+
+      <ul class="L-zh">
         <li><b>402 条词表 · 72 条词汇讲解 · 16 篇中泰对照课文 · 28 组词语辨析 · 995 条朗读语音</b></li>
         <li>17 天 53 次提交交付：<b>PWA + Capacitor 签名 Android APK</b>（v1.1.0 build 4）</li>
         <li>自建一键发版链路（自检 → 打包 → 压缩 → <b>增量更新包</b>）与 <b>GitHub Actions</b> CI + Pages 自动部署</li>
         <li>解决移动端真实问题：iOS 安全区与 44px 触摸目标、PWA 离线缓存含视频分片、局域网访问自动剔除 VPN 的 TUN 网段</li>
       </ul>
+      <ul class="L-en">
+        <li><b>402 vocabulary entries · 72 in-depth word notes · 16 bilingual reading texts · 28 sense-discrimination sets · 995 audio clips</b></li>
+        <li>Shipped in <b>53 commits over 17 days</b>: <b>PWA + Capacitor-signed Android APK</b> (v1.1.0 build 4)</li>
+        <li>Self-built release pipeline (self-check → package → zip → <b>incremental update bundle</b>) with <b>GitHub Actions</b> CI and Pages deployment</li>
+        <li>Solved real mobile problems: iOS safe areas and 44px touch targets, offline caching including video segments, and filtering out VPN TUN subnets from LAN address candidates</li>
+      </ul>
+
       <div class="links">
-        <a class="primary" href="https://2123801245-coder.github.io/thai-kb/">在线体验</a>
-        <a href="https://github.com/2123801245-coder/thai-kb/releases/latest/download/thai-kb.apk">下载 APK</a>
+        <a class="primary" href="https://2123801245-coder.github.io/thai-kb/">
+          <span class="L-zh">在线体验</span><span class="L-en">Live demo</span>
+        </a>
+        <a href="https://github.com/2123801245-coder/thai-kb/releases/latest/download/thai-kb.apk">
+          <span class="L-zh">下载 APK</span><span class="L-en">Download APK</span>
+        </a>
         <a href="https://github.com/2123801245-coder/thai-kb">GitHub</a>
       </div>
     </div>
 
+    <!-- 2 -->
     <div class="card">
       <div class="card-top">
-        <h3>泰国跨境电商市场情报平台 · th-ecom-intel</h3>
-        <span class="tag">Python 零依赖 + React</span>
+        <h3 class="L-zh">泰国跨境电商市场情报平台 · th-ecom-intel</h3>
+        <h3 class="L-en">Thailand Cross-border E-commerce Intelligence · th-ecom-intel</h3>
+        <span class="tag L-zh">Python 零依赖 + React</span>
+        <span class="tag L-en">Zero-dependency Python + React</span>
       </div>
-      <p>价格监控 → 竞争分析 → 选品机会 → 自动商业报告，面向准备进入泰国市场的中国卖家。</p>
-      <ul>
+
+      <p class="L-zh">价格监控 → 竞争分析 → 选品机会 → 自动商业报告，面向准备进入泰国市场的中国卖家。</p>
+      <p class="L-en">Price monitoring → competitor analysis → product-opportunity scoring → automated business reports, for Chinese sellers entering the Thai market.</p>
+
+      <ul class="L-zh">
         <li>后端 <b>37 个模块 / 11,488 行，零第三方依赖</b>；前端 React 18 + Vite + Tailwind + Recharts</li>
         <li><b>反编造校验</b>：把分析结果构建成带来源标签的事实集，生成后逐个数字回查 —— 实测 <b>187 个数字、越界 0</b></li>
         <li>5 种可互换取数模式；Priceza 采集器 21 秒抓取 144 个在售商品；Playwright 采集用 XHR 响应拦截抗改版</li>
         <li>识别并修正 4 处真实数据陷阱（泰文 <code>\uXXXX</code> 转义乱码、聚合占位符冒充商家名、跨品类价格离散度失真、覆盖率不足时 HHI 误判）</li>
       </ul>
+      <ul class="L-en">
+        <li>Backend: <b>37 modules / 11,488 lines, zero third-party dependencies</b>. Frontend: React 18 + Vite + Tailwind + Recharts</li>
+        <li><b>Anti-fabrication check</b>: builds a provenance-tagged fact set, then verifies every number in the generated report back against it — measured <b>187 numbers, 0 out-of-bounds</b></li>
+        <li>Five interchangeable collection modes; the Priceza collector pulls <b>144 live products in 21 s</b>; Playwright collectors use XHR response interception for resilience against redesigns</li>
+        <li>Found and fixed four real data traps (Thai text stored as <code>\uXXXX</code> escapes, aggregator placeholders parsed as merchant names, meaningless cross-category price dispersion, and a false HHI verdict at 72% coverage)</li>
+      </ul>
+
       <div class="links">
-        <a class="primary" href="https://github.com/2123801245-coder/th-ecom-intel/blob/main/CASE_STUDY.en.md">英文工程 Case Study</a>
+        <a class="primary" href="https://github.com/2123801245-coder/th-ecom-intel/blob/main/CASE_STUDY.en.md">
+          <span class="L-zh">英文工程 Case Study</span><span class="L-en">Engineering case study</span>
+        </a>
         <a href="https://github.com/2123801245-coder/th-ecom-intel">GitHub</a>
       </div>
     </div>
 
+    <!-- 3 -->
     <div class="card">
       <div class="card-top">
-        <h3>泰中双语字幕流水线</h3>
-        <span class="tag">Python · Docker · FFmpeg · LLM</span>
+        <h3 class="L-zh">泰中双语字幕流水线</h3>
+        <h3 class="L-en">Thai → Chinese Bilingual Subtitle Pipeline</h3>
+        <span class="tag L-zh">Python · Docker · FFmpeg · LLM</span>
+        <span class="tag L-en">Python · Docker · FFmpeg · LLM</span>
       </div>
-      <p>从泰语原片到中文成片的全自动双语字幕链路，并配套内容运营。</p>
-      <ul>
+
+      <p class="L-zh">从泰语原片到中文成片的全自动双语字幕链路，并配套内容运营。</p>
+      <p class="L-en">A fully automated bilingual subtitle pipeline from raw Thai video to finished Chinese release, plus the surrounding content operation.</p>
+
+      <ul class="L-zh">
         <li>泰语滚动字幕拆卷 → LLM 译中 → 时间轴规范化 → 按时间重叠配对 → 双语双样式 ASS 渲染 → 烧录成片（<b>不重编码、不损画质</b>）</li>
         <li>自研脚本 <b>2,349 行</b> + 4 个幂等补丁；端到端从选材到投稿 <b>&lt; 4 分钟</b></li>
         <li>建立译文质量校验环节，把反复出现的泰语错误沉淀为术语表与风格规范</li>
         <li>已发布 <b>12 条双语视频</b>，覆盖 9 个科普主题（稿件公开可核验）</li>
       </ul>
+      <ul class="L-en">
+        <li>Thai caption unrolling → LLM translation → timeline normalisation → overlap-based pairing → dual-style ASS rendering → burned-in output (<b>stream copy, no re-encode</b>)</li>
+        <li><b>2,349 lines</b> of self-written scripts plus 4 idempotent patches; end-to-end from selection to publishing in <b>under 4 minutes</b></li>
+        <li>Added a translation QA stage that distils recurring Thai error patterns into glossaries and style rules</li>
+        <li><b>12 bilingual videos</b> published across 9 science-explainer topics (all publicly verifiable)</li>
+      </ul>
+
       <div class="links">
-        <a class="primary" href="https://www.bilibili.com/video/BV1M5aY6REUR">B站稿件（示例）</a>
+        <a class="primary" href="https://www.bilibili.com/video/BV1M5aY6REUR">
+          <span class="L-zh">B站稿件（示例）</span><span class="L-en">Sample episode (Bilibili)</span>
+        </a>
         <a href="https://www.bilibili.com/video/BV1gyab6mEbi">BV1gyab6mEbi</a>
         <a href="https://www.bilibili.com/video/BV1iTaU6yEzS">BV1iTaU6yEzS</a>
       </div>
     </div>
 
+    <!-- 4 -->
     <div class="card">
       <div class="card-top">
-        <h3>ThaiAI 泰语学习应用</h3>
-        <span class="tag">参与开发 · React + Vite</span>
+        <h3 class="L-zh">ThaiAI 泰语学习应用</h3>
+        <h3 class="L-en">ThaiAI — AI Thai Learning App</h3>
+        <span class="tag L-zh">参与开发 · React + Vite</span>
+        <span class="tag L-en">Co-developer · React + Vite</span>
       </div>
-      <p>AI 泰语教师问答、口语跟读录音、生词卡、错题本与学习进度看板。</p>
+      <p class="L-zh">AI 泰语教师问答、口语跟读录音、生词卡、错题本与学习进度看板。</p>
+      <p class="L-en">AI Thai tutor Q&amp;A, speaking shadowing with recording, vocabulary cards, a mistake notebook and a progress dashboard.</p>
       <div class="links">
-        <a class="primary" href="https://thai-ai-learning-platform.vercel.app">线上体验</a>
+        <a class="primary" href="https://thai-ai.online">
+          <span class="L-zh">线上体验</span><span class="L-en">Live site</span>
+        </a>
         <a href="https://github.com/2123801245-coder/Thai-ai-learning-platform">GitHub</a>
       </div>
     </div>
@@ -204,43 +287,86 @@
 
 <section>
   <div class="wrap">
-    <h2 class="sec-title">能力 <span class="en">Skills</span></h2>
+    <h2 class="sec-title L-zh">能力</h2>
+    <h2 class="sec-title L-en">Skills</h2>
     <div class="skills">
+
       <div class="skill">
-        <h4>语言 <span class="en">Languages</span></h4>
-        <p>泰语 C1（科班系统训练：拼读规则、声调、构词；可辨识拼写／断词／标点／语法／用词错误，汉泰双向翻译与对照校对）<br>中文母语 · 英语 CET-6 547</p>
+        <h4 class="L-zh">语言</h4><h4 class="L-en">Languages</h4>
+        <p class="L-zh">泰语 C1（科班系统训练：拼读规则、声调、构词；可辨识拼写／断词／标点／语法／用词错误，汉泰双向翻译与对照校对）<br>中文母语 · 英语 CET-6 547</p>
+        <p class="L-en">Thai C1 (formal university training: orthography, tone rules, word formation; reliably detects spelling, word-segmentation, punctuation, grammar and word-choice errors; CN↔TH translation and parallel-text proofreading)<br>Native Chinese · English CET-6: 547</p>
       </div>
+
       <div class="skill">
-        <h4>泰语工程 <span class="en">Thai-language engineering</span></h4>
-        <p>语料库建设与整理 · TTS 批量生成与发音覆盖自检 · 泰文字体子集嵌入与跨设备渲染适配 · 平行语料交叉校对</p>
+        <h4 class="L-zh">泰语工程</h4><h4 class="L-en">Thai-language engineering</h4>
+        <p class="L-zh">语料库建设与整理 · TTS 批量生成与发音覆盖自检 · 泰文字体子集嵌入与跨设备渲染适配 · 平行语料交叉校对</p>
+        <p class="L-en">Corpus building and curation · batch TTS generation with pronunciation-coverage checks · Thai font subsetting and cross-device rendering · parallel-corpus cross-checking</p>
       </div>
+
       <div class="skill">
-        <h4>前端 <span class="en">Frontend</span></h4>
-        <p>原生 JavaScript 模块化（20 模块） · React 18 / Vite / Tailwind / shadcn/ui · 响应式与触屏适配</p>
+        <h4 class="L-zh">前端</h4><h4 class="L-en">Frontend</h4>
+        <p class="L-zh">原生 JavaScript 模块化（20 模块） · React 18 / Vite / Tailwind / shadcn/ui · 响应式与触屏适配</p>
+        <p class="L-en">Modular vanilla JavaScript (20 modules) · React 18 / Vite / Tailwind / shadcn/ui · responsive and touch adaptation</p>
       </div>
+
       <div class="skill">
-        <h4>后端与数据 <span class="en">Backend &amp; Data</span></h4>
-        <p>Python 标准库服务端 · REST API · SQLite · PBKDF2 认证与多租户隔离 · 数据采集（流式 HTML 解析 / Playwright / XHR 拦截）</p>
+        <h4 class="L-zh">后端与数据</h4><h4 class="L-en">Backend &amp; Data</h4>
+        <p class="L-zh">Python 标准库服务端 · REST API · SQLite · PBKDF2 认证与多租户隔离 · 数据采集（流式 HTML 解析 / Playwright / XHR 拦截）</p>
+        <p class="L-en">Pure-stdlib Python server · REST API · SQLite · PBKDF2 auth and multi-tenant isolation · data collection (streaming HTML parsing / Playwright / XHR interception)</p>
       </div>
+
       <div class="skill">
-        <h4>移动与交付 <span class="en">Mobile &amp; Delivery</span></h4>
-        <p>PWA / Service Worker · Capacitor 签名 APK · GitHub Actions CI · Git 发版流程与增量更新</p>
+        <h4 class="L-zh">移动与交付</h4><h4 class="L-en">Mobile &amp; Delivery</h4>
+        <p class="L-zh">PWA / Service Worker · Capacitor 签名 APK · GitHub Actions CI · Git 发版流程与增量更新</p>
+        <p class="L-en">PWA / Service Worker · Capacitor signed APK · GitHub Actions CI · Git release flow with incremental updates</p>
       </div>
+
       <div class="skill">
-        <h4>求职方向 <span class="en">Open to</span></h4>
-        <p>小语种 AI 语料标注 · 语音数据与转写 · 大模型小语种评测 · 本地化测试（LQA） · 泰国市场数据分析 —— 远程 / 项目制，每周可投入 20 小时以上</p>
+        <h4 class="L-zh">求职方向</h4><h4 class="L-en">Open to</h4>
+        <p class="L-zh">小语种 AI 语料标注 · 语音数据与转写 · 大模型小语种评测 · 本地化测试（LQA） · 泰国市场数据分析 —— 远程 / 项目制，每周可投入 20 小时以上</p>
+        <p class="L-en">Low-resource-language AI corpus annotation · speech data and transcription · LLM evaluation for Thai · localization QA · Thai market data analysis — remote / project-based, 20+ hrs/week</p>
       </div>
+
     </div>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
-    张浩博 · Haobo Zhang ｜ <a href="mailto:2123801245@qq.com">2123801245@qq.com</a> ｜
-    <a href="https://github.com/2123801245-coder">GitHub</a><br>
-    <span style="font-size:12.5px">部分代码借助 AI 编程助手完成，所有功能均经实际运行验证。 · Some code was written with AI coding assistance; all features were verified by actually running them.</span>
+    <span class="L-zh">张浩博 · Haobo Zhang ｜ </span>
+    <span class="L-en">Haobo Zhang 张浩博 ｜ </span>
+    <a href="mailto:2123801245@qq.com">2123801245@qq.com</a> ｜
+    <a href="https://github.com/2123801245-coder">GitHub</a>
+    <p class="fineprint L-zh">部分代码借助 AI 编程助手完成，所有功能均经实际运行验证。</p>
+    <p class="fineprint L-en">Some code was written with AI coding assistance; every feature listed here was verified by actually running it.</p>
   </div>
 </footer>
+
+<script>
+  (function () {
+    var html = document.documentElement;
+    var btns = document.querySelectorAll('[data-setlang]');
+
+    function apply(lang) {
+      html.setAttribute('data-lang', lang);
+      html.setAttribute('lang', lang === 'en' ? 'en' : 'zh-CN');
+      btns.forEach(function (b) {
+        b.setAttribute('aria-pressed', String(b.dataset.setlang === lang));
+      });
+      try { localStorage.setItem('portfolio-lang', lang); } catch (e) {}
+    }
+
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () { apply(b.dataset.setlang); });
+    });
+
+    // 记忆上次选择；否则按浏览器语言自动判断
+    var saved = null;
+    try { saved = localStorage.getItem('portfolio-lang'); } catch (e) {}
+    var auto = (navigator.language || '').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en';
+    apply(saved || auto);
+  })();
+</script>
 
 </body>
 </html>
